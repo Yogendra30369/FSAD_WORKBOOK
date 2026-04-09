@@ -1,0 +1,209 @@
+{
+  "info": {
+    "name": "Exp15 JWT RBAC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "JWT authentication and role-based authorization tests"
+  },
+  "item": [
+    {
+      "name": "Login - Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["login"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const json = pm.response.json();",
+              "pm.environment.set('adminToken', json.token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login - Employee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["login"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"employee\",\n  \"password\": \"emp123\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "const json = pm.response.json();",
+              "pm.environment.set('employeeToken', json.token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employee Profile - With Employee Token",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{employeeToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/employee/profile",
+          "host": ["{{baseUrl}}"],
+          "path": ["employee", "profile"]
+        }
+      }
+    },
+    {
+      "name": "Employee Profile - Without Token",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/employee/profile",
+          "host": ["{{baseUrl}}"],
+          "path": ["employee", "profile"]
+        }
+      }
+    },
+    {
+      "name": "Employee Profile - Invalid Token",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer invalid.token.value"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/employee/profile",
+          "host": ["{{baseUrl}}"],
+          "path": ["employee", "profile"]
+        }
+      }
+    },
+    {
+      "name": "Admin Add - With Admin Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/add?employeeName=john",
+          "host": ["{{baseUrl}}"],
+          "path": ["admin", "add"],
+          "query": [
+            {
+              "key": "employeeName",
+              "value": "john"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin Delete - With Admin Token",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/delete?employeeName=john",
+          "host": ["{{baseUrl}}"],
+          "path": ["admin", "delete"],
+          "query": [
+            {
+              "key": "employeeName",
+              "value": "john"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin Add - With Employee Token (Should Fail)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{employeeToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/admin/add?employeeName=john",
+          "host": ["{{baseUrl}}"],
+          "path": ["admin", "add"],
+          "query": [
+            {
+              "key": "employeeName",
+              "value": "john"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "employeeToken",
+      "value": ""
+    }
+  ]
+}
