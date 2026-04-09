@@ -1,0 +1,55 @@
+:root {
+    --accent: #ff5f1f;
+    --accent-2: #03a9f4;
+    --accent-3: #00c853;
+    --ink: #0e1320;
+    --paper: #f7fbff;
+}
+
+html {
+    background: radial-gradient(circle at 20% 10%, #fff0d9 0%, #f7fbff 35%, #e8f2ff 100%);
+}
+
+body {
+    font-family: "Poppins", "Segoe UI", sans-serif !important;
+    color: var(--ink) !important;
+}
+
+.topbar {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3)) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.topbar .download-url-wrapper {
+    display: none !important;
+}
+
+.swagger-ui .info {
+    border-radius: 14px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid #d9e7ff;
+}
+
+.swagger-ui .opblock {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #dbe5ff;
+    box-shadow: 0 8px 18px rgba(11, 65, 143, 0.08);
+}
+
+.swagger-ui .opblock-tag {
+    font-size: 1.1rem;
+    color: #133160;
+}
+
+.swagger-ui .btn.execute {
+    background: linear-gradient(135deg, #ff6e40, #ffab40) !important;
+    border-color: transparent !important;
+    color: #102031 !important;
+    font-weight: 700;
+}
+
+.swagger-ui .response-col_status {
+    font-weight: 700;
+}
