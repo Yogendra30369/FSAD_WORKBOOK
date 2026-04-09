@@ -1,0 +1,36 @@
+.container{
+width:300px;
+margin:auto;
+margin-top:50px;
+padding:20px;
+border:1px solid gray;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:5px 0;
+}
+
+button{
+padding:10px;
+width:100%;
+background:blue;
+color:white;
+border:none;
+}
+
+nav{
+background:black;
+padding:10px;
+}
+
+nav a{
+color:white;
+margin:10px;
+text-decoration:none;
+}
+
+nav button{
+margin-left:20px;
+}
